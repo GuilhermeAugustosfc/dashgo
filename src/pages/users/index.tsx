@@ -22,9 +22,16 @@ import { Sidebar } from "../../components/Sidebar";
 import { useQuery } from "react-query";
 import { api } from "../../service/api";
 import { useUsers } from "../../service/hooks/useUsers";
+import { useState } from "react";
 
 export default function UserList() {
-  const { isLoading, data, isError, isFetched } = useUsers();
+  const [page, setPage] = useState(1);
+  const {
+    isLoading,
+    data: { users, userCount },
+    isError,
+    isFetched,
+  } = useUsers(page);
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
@@ -73,7 +80,7 @@ export default function UserList() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {data.map((user) => (
+                  {users.map((user) => (
                     <Tr>
                       <Td px="6" color={"gray.300"} width="8">
                         <Checkbox colorScheme={"pink"} />
@@ -103,9 +110,9 @@ export default function UserList() {
                 </Tbody>
               </Table>
               <Pagination
-                totalCountOfRegister={200}
-                currentPage={5}
-                onPageChange={() => {}}
+                totalCountOfRegister={userCount}
+                currentPage={page}
+                onPageChange={setPage}
               />
             </>
           )}

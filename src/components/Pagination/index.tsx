@@ -50,7 +50,7 @@ export function Pagination({
       <Stack direction={"row"} spacing="2">
         {currentPage > 1 + siblingsCount && (
           <>
-            <PaginationItem>1</PaginationItem>
+            <PaginationItem onPageChange={onPageChange} number={1} />
             {currentPage > 2 + siblingsCount && (
               <Text color="gray.300" width={6} textAlign="center">
                 ...
@@ -61,14 +61,26 @@ export function Pagination({
 
         {previusPage.length > 0 &&
           previusPage.map((page) => (
-            <PaginationItem key={page}>{page}</PaginationItem>
+            <PaginationItem
+              onPageChange={onPageChange}
+              number={page}
+              key={page}
+            />
           ))}
 
-        <PaginationItem isCurrent>{currentPage}</PaginationItem>
+        <PaginationItem
+          onPageChange={onPageChange}
+          number={currentPage}
+          isCurrent
+        />
 
         {newsPages.length > 0 &&
           newsPages.map((page) => (
-            <PaginationItem key={page}>{page}</PaginationItem>
+            <PaginationItem
+              onPageChange={onPageChange}
+              number={page}
+              key={page}
+            />
           ))}
 
         {currentPage + siblingsCount > lastPage && (
@@ -78,7 +90,10 @@ export function Pagination({
                 ...
               </Text>
             )}
-            <PaginationItem>{totalCountOfRegister}</PaginationItem>
+            <PaginationItem
+              onPageChange={onPageChange}
+              number={totalCountOfRegister}
+            />
           </>
         )}
       </Stack>
